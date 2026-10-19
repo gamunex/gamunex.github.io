@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>NexBoard</title>
+  <meta name="description" content="Touch-Leiste im Stream-Deck-Stil auf Basis eines ESP32-S3 mit 640 × 172-Display – Audio, Media, Hotkeys und AION-2-DPS-Meter.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/glass.css">
+  <link rel="stylesheet" href="../assets/mockups.css">
+  <style>
+    .stage { padding: 34px 26px; border-radius: 32px; }
+    .stage figcaption { text-align: center; color: var(--faint); font-size: 13px; margin-top: 18px; }
+    .arch { display: grid; grid-template-columns: 1fr auto 1.3fr; gap: 18px; align-items: center; }
+    .box { padding: 20px 22px; }
+    .box h3 { margin: 0 0 4px; font-size: 16px; }
+    .box p { margin: 0; color: var(--muted); font-size: 14px; }
+    .box ul { margin: 8px 0 0; padding-left: 18px; color: var(--muted); font-size: 14px; }
+    .wire { text-align: center; color: var(--faint); font: 12.5px var(--mono); }
+    .wire .line { height: 2px; width: 90px; margin: 8px auto; background: linear-gradient(90deg, var(--accent-2), var(--accent)); border-radius: 2px; box-shadow: 0 0 12px var(--accent); }
+    @media (max-width: 800px) { .arch { grid-template-columns: 1fr; } .wire .line { width: 2px; height: 40px; } }
+  </style>
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true">
+    <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span>
+  </div>
+  <div class="page">
+    <nav class="nav glass">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt=""><span>gamunex</span></a>
+      <div class="links">
+        <a class="hide-sm" href="#funktionen">Funktionen</a>
+        <a class="hide-sm" href="#aufbau">Aufbau</a>
+        <a href="https://github.com/gamunex/deckbar">GitHub</a>
+      </div>
+    </nav>
+
+    <header class="hero reveal">
+      <span class="eyebrow glass">ESP32-S3 · LVGL · Linux</span>
+      <h1>NexBoard</h1>
+      <p>Eine Touch-Leiste im Stream-Deck-Stil unter dem Monitor. Lautstärke, Mikrofon, Media und Hotkeys mit einem Fingertipp – und für AION 2 ein DPS-Meter der ganzen Gruppe.</p>
+      <div class="cta">
+        <a class="btn main" href="https://github.com/gamunex/deckbar#einrichtung-cachyos--arch-kde-plasma">Einrichten</a>
+        <a class="btn" href="https://github.com/gamunex/deckbar"><svg class="i"><use href="#i-github"/></svg>Quellcode</a>
+      </div>
+    </header>
+
+    <figure class="stage glass reveal" style="animation-delay:.1s;margin:0">
+      <div class="nexboard" role="img" aria-label="Nachbau der NexBoard-Touch-Leiste">
+            <div class="nb-device"><div class="nb-screen">
+              <div class="nb-tile"><svg class="nb-ic"><use href="#i-volume"/></svg><div><small>Ausgang</small><br><b>62 %</b></div><div class="nb-slider"><i></i></div></div>
+              <div class="nb-tile nb-mute"><svg class="nb-ic"><use href="#i-mic-off"/></svg><b>Mikro</b></div>
+              <div class="nb-tile nb-media"><div class="nb-cover"></div><div class="t"><b>Nightdrive</b><small>Synthwave Radio</small><div class="nb-ctrl"><svg class="nb-ic"><use href="#i-prev"/></svg><svg class="nb-ic"><use href="#i-pause"/></svg><svg class="nb-ic"><use href="#i-next"/></svg></div></div></div>
+              <div class="nb-tile nb-dps"><small>Gruppe</small><div class="nb-bar" style="--c:#ff7aa2;--w:100%"></div><div class="nb-bar" style="--c:#9d8bff;--w:78%"></div><div class="nb-bar" style="--c:#4fdba6;--w:55%"></div><div class="nb-bar" style="--c:#ffc65c;--w:31%"></div></div>
+              <div class="nb-dots"><i></i><i></i><i></i></div>
+            </div></div>
+          </div>
+      <figcaption>Nachbau der Leiste – auf dem Gerät 640 × 172 Pixel, Waveshare ESP32-S3-Touch-LCD-3.49</figcaption>
+    </figure>
+
+    <h2 id="funktionen">Was die Leiste kann</h2>
+    <p class="lead">Die Firmware zeichnet nur, was der Daemon auf dem PC schickt. Alle Logik lebt am Rechner und ist über eine Web-UI einstellbar.</p>
+    <div class="features">
+      <div class="feature glass" style="--c: var(--accent)"><div class="ic"><svg class="i"><use href="#i-volume"/></svg></div><h3>Kacheln</h3><p>Taste, Schalter und Schieberegler für Lautstärke und Mute, Media mit Cover und Titel, Links, Hotkeys und Shell-Befehle.</p></div>
+      <div class="feature glass" style="--c: var(--ok)"><div class="ic"><svg class="i"><use href="#i-pulse"/></svg></div><h3>Live-Status</h3><p>Mute, Lautstärke und Track folgen dem PC, auch wenn dort umgeschaltet wird. Eigene Werte kommen per <code>POST /api/state</code> dazu.</p></div>
+      <div class="feature glass" style="--c: var(--accent-2)"><div class="ic"><svg class="i"><use href="#i-layers"/></svg></div><h3>Mehrere Seiten</h3><p>Wischgesten zwischen Seiten, Hintergrund nach Wahl: Standard, Desktop-Hintergrund oder eigenes Bild.</p></div>
+      <div class="feature glass" style="--c: var(--warn)"><div class="ic"><svg class="i"><use href="#i-sword"/></svg></div><h3>AION 2</h3><p>DPS-Meter der Gruppe als eigene Seite, Overlay über dem Spiel mit Boss-Leiste und Event-Timer, nach jedem Run ein Bild für Discord.</p></div>
+      <div class="feature glass" style="--c: #5ea9ff"><div class="ic"><svg class="i"><use href="#i-msg"/></svg></div><h3>Discord-Bot</h3><p>Gruppen-DPS und Run-Ergebnisse gehen an einen Bot, der die Meldungen mehrerer Spieler zusammenführt.</p></div>
+      <div class="feature glass" style="--c: var(--danger)"><div class="ic"><svg class="i"><use href="#i-toggle"/></svg></div><h3>Modular</h3><p>Touch-Leiste, Mitschnitt, Overlay, Runs, Bot und Updates einzeln ein- und ausschalten – ohne Neustart.</p></div>
+    </div>
+
+    <h2 id="aufbau">Aufbau</h2>
+    <p class="lead">Gerät und Simulator teilen sich denselben LVGL-Code. Verbunden wird per WLAN, bei Bedarf über USB.</p>
+    <div class="arch">
+      <div class="box glass"><h3>Gerät oder Simulator</h3><p>LVGL 9.3 in C, identisch auf dem ESP32-S3 und im SDL-Simulator.</p><ul><li>rendert Layout und Zustand</li><li>meldet nur, welche Kachel angetippt wurde</li><li>Ruhemodus ohne PC</li></ul></div>
+      <div class="wire">WebSocket · JSON v1<div class="line"></div>WLAN oder USB</div>
+      <div class="box glass"><h3>deckbar-daemon (Python)</h3><p>Kennt alle Aktionen und hält den Zustand aktuell.</p><ul><li>wpctl, <code>pactl subscribe</code>, <code>playerctl --follow</code></li><li>xdg-open, ydotool, Shell</li><li>Web-UI mit Leisten-Editor und Live-Vorschau</li><li>Rust-Mitschnitt und QML-Overlay für AION 2</li></ul></div>
+    </div>
+
+    <h2>Loslegen</h2>
+    <p class="lead">Getestet auf CachyOS / Arch mit KDE Plasma. Die ausführliche Anleitung steht im README.</p>
+    <div class="two">
+      <div class="code glass">
+        <pre><span class="c"># Pakete</span>
+sudo pacman -S --needed sdl2 playerctl ydotool wireplumber libpulse uv
+
+<span class="c"># Daemon starten</span>
+git clone https://github.com/gamunex/deckbar.git
+cd deckbar/daemon && uv sync
+uv run deckbar-daemon --open
+
+<span class="c"># Firmware flashen (PlatformIO)</span>
+uv tool install platformio</pre>
+      </div>
+      <div class="notes glass">
+        <ul>
+          <li><b>Hardware:</b> Waveshare ESP32-S3-Touch-LCD-3.49, Board V1 und V2.</li>
+          <li><b>Ohne Gerät testen:</b> der SDL-Simulator zeigt die Leiste 1:1 in einem Fenster.</li>
+          <li><b>Web-UI</b> unter <code>localhost:8765</code>, nur vom eigenen PC erreichbar.</li>
+          <li><b>Früher DeckBar:</b> technische Namen wie <code>deckbar-daemon</code> bleiben gleich.</li>
+          <li><b>Neueste Funktionen</b> (Module, Discord-Bot, Ruhemodus) liegen noch im Branch <a href="https://github.com/gamunex/deckbar/tree/modular"><code>modular</code></a>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <footer>NexBoard · GPL-3.0 · <a href="https://github.com/gamunex/deckbar">github.com/gamunex/deckbar</a> · <a href="../">alle Projekte</a></footer>
+  </div>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-github" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+      <symbol id="i-volume" viewBox="0 0 24 24"><path d="M11 4.7a.7.7 0 0 0-1.2-.5L6.4 7.6A1.4 1.4 0 0 1 5.4 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.4a1.4 1.4 0 0 1 1 .4l3.4 3.4a.7.7 0 0 0 1.2-.5z"/><path d="M16 9a5 5 0 0 1 0 6M19.4 18.4a9 9 0 0 0 0-12.8"/></symbol>
+      <symbol id="i-mic-off" viewBox="0 0 24 24"><path d="M2 2l20 20M18.89 13.23A7.12 7.12 0 0 0 19 12v-2M5 10v2a7 7 0 0 0 12 5M15 9.34V5a3 3 0 0 0-5.68-1.33M9 9v3a3 3 0 0 0 5.12 2.12M12 19v3"/></symbol>
+      <symbol id="i-prev" viewBox="0 0 24 24"><path d="M19 20 9 12l10-8zM5 19V5"/></symbol>
+      <symbol id="i-next" viewBox="0 0 24 24"><path d="m5 4 10 8-10 8zM19 5v14"/></symbol>
+      <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></symbol>
+      <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+      <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65M22 17.65l-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/></symbol>
+      <symbol id="i-sword" viewBox="0 0 24 24"><path d="M14.5 17.5 3 6V3h3l11.5 11.5M13 19l6-6M16 16l4 4M19 21l2-2"/></symbol>
+      <symbol id="i-msg" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+      <symbol id="i-toggle" viewBox="0 0 24 24"><rect width="20" height="12" x="2" y="6" rx="6"/><circle cx="16" cy="12" r="2"/></symbol>
+      <symbol id="i-flag" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+      <symbol id="i-import" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+      <symbol id="i-map" viewBox="0 0 24 24"><path d="M14.1 4.4 9.9 2.5a2 2 0 0 0-1.8 0L3.6 4.7A1 1 0 0 0 3 5.6v14.8a1 1 0 0 0 1.4.9l3.7-2a2 2 0 0 1 1.8 0l4.2 2a2 2 0 0 0 1.8 0l4.5-2.2a1 1 0 0 0 .6-.9V3.6a1 1 0 0 0-1.4-.9l-3.7 2a2 2 0 0 1-1.8-.3z"/><path d="M15 5.8v15M9 2.8v15"/></symbol>
+      <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></symbol>
+      <symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+    </defs>
+  </svg>
+</body>
+</html>

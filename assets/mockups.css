@@ -1,0 +1,79 @@
+/* Nachbauten der Programme für Startseite und Projektseiten */
+
+/* ---------- NexBoard: Touch-Leiste 640 × 172 ---------- */
+
+.nexboard { --u: 1px; width: 100%; max-width: 760px; margin: 0 auto; container-type: inline-size; }
+.nb-device {
+  aspect-ratio: 680 / 212; border-radius: 6cqw; padding: 2.9cqw;
+  background: linear-gradient(160deg, #2a2d38, #0d0f15 60%, #1b1d25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25), inset 0 -2px 6px rgba(0, 0, 0, .6), 0 30px 60px -20px rgba(0, 0, 0, .7);
+}
+.nb-screen {
+  position: relative; height: 100%; border-radius: 2.4cqw; overflow: hidden;
+  background:
+    radial-gradient(60% 120% at 10% 0%, #8a1f55 0%, transparent 60%),
+    radial-gradient(60% 120% at 90% 100%, #3b2fa0 0%, transparent 65%),
+    radial-gradient(40% 90% at 55% 50%, #0a6f78 0%, transparent 70%),
+    #07080e;
+  display: grid; grid-template-columns: 1.55fr 1fr 2.2fr 1fr; gap: 1.6cqw; padding: 1.8cqw;
+  font-size: 2.15cqw; color: #fff;
+}
+.nb-tile {
+  position: relative; border-radius: 2cqw; padding: 1.4cqw 1.6cqw; overflow: hidden;
+  background: linear-gradient(160deg, rgba(255, 255, 255, .2), rgba(255, 255, 255, .06));
+  border: 1px solid rgba(255, 255, 255, .22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45);
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.nb-tile small { opacity: .7; font-size: .82em; }
+.nb-tile b { font-weight: 650; }
+.nb-ic { width: 4.2cqw; height: 4.2cqw; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.nb-slider { height: 1.6cqw; border-radius: 1cqw; background: rgba(0, 0, 0, .35); overflow: hidden; }
+.nb-slider i { display: block; height: 100%; width: 62%; border-radius: inherit; background: linear-gradient(90deg, #9d8bff, #ff7aa2); animation: nb-vol 7s ease-in-out infinite; }
+@keyframes nb-vol { 0%, 100% { width: 62%; } 45% { width: 78%; } 70% { width: 48%; } }
+.nb-mute { background: linear-gradient(160deg, rgba(255, 95, 109, .55), rgba(255, 95, 109, .18)); border-color: rgba(255, 140, 150, .5); }
+.nb-media { flex-direction: row; align-items: center; gap: 1.6cqw; justify-content: flex-start; }
+.nb-cover { width: 12cqw; aspect-ratio: 1; border-radius: 1.4cqw; flex: none; background: conic-gradient(from 210deg, #ff7aa2, #ffc65c, #4fdba6, #5ea9ff, #9d8bff, #ff7aa2); box-shadow: 0 0.6cqw 2cqw rgba(0, 0, 0, .45); animation: nb-spin 18s linear infinite; }
+@keyframes nb-spin { to { filter: hue-rotate(360deg); } }
+.nb-media .t { min-width: 0; display: flex; flex-direction: column; gap: .5cqw; }
+.nb-media .t b, .nb-media .t small { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nb-ctrl { display: flex; gap: 1.6cqw; margin-top: .6cqw; opacity: .9; }
+.nb-dots { position: absolute; left: 50%; bottom: .7cqw; transform: translateX(-50%); display: flex; gap: .8cqw; }
+.nb-dots i { width: .9cqw; height: .9cqw; border-radius: 50%; background: rgba(255, 255, 255, .35); }
+.nb-dots i:first-child { background: #fff; }
+.nb-dps { gap: .5cqw; }
+.nb-bar { height: 1.3cqw; border-radius: .7cqw; background: linear-gradient(90deg, var(--c), transparent); width: var(--w); }
+
+/* ---------- Exile Leveling: Overlay über dem Spiel ---------- */
+
+@font-face {
+  font-family: "Fontin SmallCaps";
+  src: url("https://cdn.jsdelivr.net/gh/gamunex/exile-leveling-linux@3b5db808c782ffabb3c900c94e1a1140553c445b/exile_leveling/data/Fontin-SmallCaps.ttf") format("truetype");
+  font-display: swap;
+}
+.poe-scene {
+  position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 16 / 9; width: 100%;
+  background:
+    radial-gradient(70% 60% at 30% 70%, rgba(90, 70, 40, .55), transparent 70%),
+    radial-gradient(50% 40% at 75% 30%, rgba(40, 70, 90, .5), transparent 70%),
+    linear-gradient(180deg, #1a1712, #0b0a08);
+}
+.poe-scene::before {
+  content: ""; position: absolute; inset: 0; opacity: .35;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+.poe-overlay {
+  position: absolute; left: 50%; bottom: 7%; transform: translateX(-50%); width: min(86%, 470px);
+  font-family: "Fontin SmallCaps", "Palatino Linotype", Georgia, serif; font-size: clamp(11px, 1.55vw, 16px); color: #fff;
+}
+.poe-guide { background: rgba(0, 0, 0, .86); padding: .5em .8em .6em; }
+.poe-line { display: flex; align-items: center; gap: .35em; line-height: 1.55; white-space: nowrap; }
+.poe-line img { height: 1.15em; width: auto; }
+.poe-line .bul { height: 1em; margin-right: .15em; }
+.poe-line.hint { padding-left: 1.4em; opacity: .9; }
+.poe-controls { display: grid; grid-template-columns: auto 1fr auto; gap: 0; margin-top: 2px; background: #000; }
+.poe-controls > span { border: 1px solid #404040; padding: .15em .6em; text-align: center; }
+.poe-row2 { display: grid; grid-template-columns: 1fr auto auto auto 1fr; background: #000; }
+.poe-row2 > span { border: 1px solid #404040; padding: .15em .6em; text-align: center; }
+.poe-caption { position: absolute; top: 12px; left: 14px; font: 12px var(--mono, monospace); color: rgba(255, 255, 255, .55); }

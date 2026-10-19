@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>gamunex</title>
+  <meta name="description" content="Projekte von gamunex: Werkzeuge für Linux-Gaming, Touch-Hardware mit ESP32 und den eigenen Server.">
+  <meta property="og:title" content="gamunex">
+  <meta property="og:description" content="Werkzeuge für Linux-Gaming, Touch-Hardware mit ESP32 und den eigenen Server.">
+  <meta property="og:image" content="https://gamunex.github.io/cellarium/screenshot.png">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/glass.css">
+  <link rel="stylesheet" href="assets/mockups.css">
+  <style>
+    .showcase { display: grid; gap: 22px; }
+    .project { display: grid; grid-template-columns: 1.15fr 1fr; gap: 0; overflow: hidden; border-radius: 30px; }
+    .project:nth-child(even) { grid-template-columns: 1fr 1.15fr; }
+    .project:nth-child(even) .visual { order: 2; }
+    .project .visual { padding: 26px; display: grid; place-items: center; min-height: 300px; background: linear-gradient(135deg, rgba(0, 0, 0, .18), rgba(0, 0, 0, .04)); }
+    .project .visual img.shot { width: 100%; border-radius: 16px; box-shadow: 0 20px 50px -15px rgba(0, 0, 0, .6); border: 1px solid var(--stroke); display: block; }
+    .project .text { padding: 34px 34px 30px; display: flex; flex-direction: column; justify-content: center; }
+    .project h3 { font-size: 28px; letter-spacing: -.6px; margin: 10px 0 8px; }
+    .project p { color: var(--muted); margin: 0 0 16px; }
+    .project .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+    .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag { font-size: 12px; padding: 3px 10px; border-radius: 999px; background: var(--field); border: 1px solid var(--stroke); color: var(--muted); }
+    .kicker { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; color: color-mix(in srgb, var(--c) 75%, var(--text)); }
+    .kicker::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--c); box-shadow: 0 0 10px var(--c); }
+
+    .more { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .mini { padding: 20px 20px 18px; display: flex; flex-direction: column; gap: 10px; transition: transform .25s cubic-bezier(.2, .8, .2, 1); }
+    .mini:hover { transform: translateY(-3px); }
+    .mini .head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .mini h3 { margin: 0; font-size: 17px; }
+    .mini p { margin: 0; color: var(--muted); font-size: 14px; flex: 1; }
+    .lock { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; color: var(--faint); padding: 2px 9px; border-radius: 999px; border: 1px solid var(--stroke); }
+    .lock .i { width: 12px; height: 12px; }
+
+    @media (max-width: 900px) {
+      .project, .project:nth-child(even) { grid-template-columns: 1fr; }
+      .project:nth-child(even) .visual { order: 0; }
+      .more { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) { .more { grid-template-columns: 1fr; } .project .text { padding: 24px; } .project .visual { min-height: 0; padding: 16px; } }
+  </style>
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true">
+    <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span>
+  </div>
+
+  <div class="page">
+    <nav class="nav glass">
+      <a class="brand" href="./"><img src="assets/logo.svg" alt=""><span>gamunex</span></a>
+      <div class="links">
+        <a class="hide-sm" href="#projekte">Projekte</a>
+        <a class="hide-sm" href="#weitere">Weitere</a>
+        <a href="https://github.com/gamunex">GitHub</a>
+      </div>
+    </nav>
+
+    <header class="hero reveal">
+      <img class="mark" src="assets/logo.svg" alt="">
+      <h1>gamunex</h1>
+      <p>Ich baue Werkzeuge, die mir selbst gefehlt haben – für Linux-Gaming, kleine Hardware mit Touch-Display und den eigenen Server zu Hause.</p>
+      <div class="cta">
+        <a class="btn main" href="#projekte">Projekte ansehen</a>
+        <a class="btn" href="https://github.com/gamunex"><svg class="i"><use href="#i-github"/></svg>GitHub</a>
+      </div>
+    </header>
+
+    <div class="chips reveal" style="animation-delay:.1s">
+      <span class="chip" style="--c:#ff7aa2"><span class="sw"></span>Linux-Gaming · Wine &amp; Proton</span>
+      <span class="chip" style="--c:#4fdba6"><span class="sw"></span>ESP32 · LVGL</span>
+      <span class="chip" style="--c:#66c0f4"><span class="sw"></span>Home Assistant</span>
+      <span class="chip" style="--c:#ffc65c"><span class="sw"></span>Self-Hosting · Unraid</span>
+      <span class="chip" style="--c:#9d8bff"><span class="sw"></span>Python · .NET · TypeScript</span>
+    </div>
+
+    <h2 id="projekte">Projekte</h2>
+    <p class="lead">Offen, zum Ausprobieren und Mitbauen.</p>
+
+    <div class="showcase">
+      <article class="project glass">
+        <div class="visual"><img class="shot" src="cellarium/screenshot.png" alt="Cellarium mit Beispieldaten"></div>
+        <div class="text">
+          <span class="kicker" style="--c:#ff7aa2">Linux-Gaming</span>
+          <h3>Cellarium</h3>
+          <p>Alle Wine- und Proton-Prefixe auf einen Blick: welcher Launcher sie benutzt, was darin installiert ist, wie groß sie sind – und welche nur noch Platz verschwenden. Dazu winecfg, winetricks &amp; Co. mit dem richtigen Proton.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Steam · Lutris · Faugus · Heroic · Bottles</span><span class="tag">umu</span></div>
+          <div class="actions">
+            <a class="btn main small" href="cellarium/">Projektseite &amp; Demo</a>
+            <a class="btn small" href="https://github.com/gamunex/cellarium"><svg class="i"><use href="#i-github"/></svg>Code</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project glass">
+        <div class="visual">
+          <div class="nexboard" role="img" aria-label="Nachbau der NexBoard-Touch-Leiste">
+            <div class="nb-device"><div class="nb-screen">
+              <div class="nb-tile"><svg class="nb-ic"><use href="#i-volume"/></svg><div><small>Ausgang</small><br><b>62 %</b></div><div class="nb-slider"><i></i></div></div>
+              <div class="nb-tile nb-mute"><svg class="nb-ic"><use href="#i-mic-off"/></svg><b>Mikro</b></div>
+              <div class="nb-tile nb-media"><div class="nb-cover"></div><div class="t"><b>Nightdrive</b><small>Synthwave Radio</small><div class="nb-ctrl"><svg class="nb-ic"><use href="#i-prev"/></svg><svg class="nb-ic"><use href="#i-pause"/></svg><svg class="nb-ic"><use href="#i-next"/></svg></div></div></div>
+              <div class="nb-tile nb-dps"><small>Gruppe</small><div class="nb-bar" style="--c:#ff7aa2;--w:100%"></div><div class="nb-bar" style="--c:#9d8bff;--w:78%"></div><div class="nb-bar" style="--c:#4fdba6;--w:55%"></div><div class="nb-bar" style="--c:#ffc65c;--w:31%"></div></div>
+              <div class="nb-dots"><i></i><i></i><i></i></div>
+            </div></div>
+          </div>
+        </div>
+        <div class="text">
+          <span class="kicker" style="--c:#4fdba6">Hardware</span>
+          <h3>NexBoard</h3>
+          <p>Eine Touch-Leiste im Stream-Deck-Stil unter dem Monitor, gebaut auf einem ESP32-S3 mit 640 × 172-Display. Lautstärke, Mikrofon, Media und Hotkeys – dazu DPS-Meter, Overlay und Discord-Bot für AION 2.</p>
+          <div class="tags"><span class="tag">ESP32-S3</span><span class="tag">LVGL 9</span><span class="tag">Python-Daemon</span><span class="tag">Rust</span><span class="tag">QML</span></div>
+          <div class="actions">
+            <a class="btn main small" href="deckbar/">Projektseite</a>
+            <a class="btn small" href="https://github.com/gamunex/deckbar"><svg class="i"><use href="#i-github"/></svg>Code</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project glass">
+        <div class="visual">
+          <div class="poe-scene" role="img" aria-label="Nachbau des Leveling-Overlays">
+            <span class="poe-caption">Nachbau des Overlays</span>
+            <div class="poe-overlay">
+              <div class="poe-guide">
+                <div class="poe-line"><img class="bul" src="https://cdn.jsdelivr.net/gh/gamunex/exile-leveling-linux@3b5db808c782ffabb3c900c94e1a1140553c445b/exile_leveling/img/bullet_diamond.png" alt=""><span>kill</span><span style="color:#FF8111">hillock</span></div>
+                <div class="poe-line"><img class="bul" src="https://cdn.jsdelivr.net/gh/gamunex/exile-leveling-linux@3b5db808c782ffabb3c900c94e1a1140553c445b/exile_leveling/img/bullet_diamond.png" alt=""><span>enter</span><span style="color:#FEC076">lioneye's watch</span></div>
+                <div class="poe-line"><img class="bul" src="https://cdn.jsdelivr.net/gh/gamunex/exile-leveling-linux@3b5db808c782ffabb3c900c94e1a1140553c445b/exile_leveling/img/bullet_diamond.png" alt=""><img src="https://cdn.jsdelivr.net/gh/gamunex/exile-leveling-linux@3b5db808c782ffabb3c900c94e1a1140553c445b/exile_leveling/img/leveling%20tracker/quest.png" alt=""><span>tarkleigh:</span><span style="color:#FFDB1F">enemy at the gate</span></div>
+                <div class="poe-line"><img class="bul" src="https://cdn.jsdelivr.net/gh/gamunex/exile-leveling-linux@3b5db808c782ffabb3c900c94e1a1140553c445b/exile_leveling/img/bullet_diamond.png" alt=""><span>take</span><img src="https://cdn.jsdelivr.net/gh/gamunex/exile-leveling-linux@3b5db808c782ffabb3c900c94e1a1140553c445b/exile_leveling/img/leveling%20tracker/quest.png" alt=""><span style="color:#00FF00">gem</span></div>
+                <div class="poe-line"><img class="bul" src="https://cdn.jsdelivr.net/gh/gamunex/exile-leveling-linux@3b5db808c782ffabb3c900c94e1a1140553c445b/exile_leveling/img/bullet_diamond.png" alt=""><span>enter</span><span style="color:#FEC076">the coast</span></div>
+              </div>
+              <div class="poe-controls"><span style="color:#fff">0:07:42</span><span>act 1</span><span style="color:#fff">0:07:42</span></div>
+              <div class="poe-row2"><span style="color:#00FF00">lvl 4</span><span>&lt;</span><span>1/10</span><span>&gt;</span><span style="color:#00FF00">+0 %</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="text">
+          <span class="kicker" style="--c:#ffc65c">Gaming-Tool</span>
+          <h3>Exile Leveling for Linux</h3>
+          <p>Der Act-Tracker aus Exile-UI für Path of Exile 1, nach Linux portiert: Leitfaden, der beim Zonenwechsel weiterblättert, PoB-Import, Act-Timer und XP-Rechner – ohne AutoHotkey, nur über die Client.txt.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Tkinter</span><span class="tag">Proton</span></div>
+          <div class="actions">
+            <a class="btn main small" href="exile-leveling-linux/">Projektseite</a>
+            <a class="btn small" href="https://github.com/gamunex/exile-leveling-linux"><svg class="i"><use href="#i-github"/></svg>Code</a>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <h2 id="weitere">Weitere Projekte</h2>
+    <p class="lead">Nicht öffentlich – entweder noch in Arbeit oder für einen Verein bzw. einen bestimmten Einsatz gebaut.</p>
+    <div class="more">
+      <div class="mini glass">
+        <div class="head"><h3>GamuBase</h3><span class="lock"><svg class="i"><use href="#i-lock"/></svg>privat</span></div>
+        <p>Selbst gehostete Tool-Plattform für den Heimserver mit Login, Rollen und Dashboard. Erstes Tool: ein IT-Inventar.</p>
+        <div class="tags"><span class="tag">.NET 10</span><span class="tag">Blazor</span><span class="tag">MudBlazor</span><span class="tag">Docker</span></div>
+      </div>
+      <div class="mini glass">
+        <div class="head"><h3>Tablet-Kasse</h3><span class="lock"><svg class="i"><use href="#i-lock"/></svg>privat</span></div>
+        <p>Offline-Kasse für Vereinsfeste als PWA und Android-App: Bon per Antippen, Becherpfand läuft automatisch mit, kein Backend nötig.</p>
+        <div class="tags"><span class="tag">TypeScript</span><span class="tag">PWA</span><span class="tag">Capacitor</span></div>
+      </div>
+      <div class="mini glass">
+        <div class="head"><h3>SchreiberPi</h3><span class="lock"><svg class="i"><use href="#i-lock"/></svg>privat</span></div>
+        <p>Messwerterfassung auf dem Raspberry Pi 5: vier 4–20-mA- und vier Digitaleingänge, Web-Dashboard, Kalibrierung und PDF-Export.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Node-RED</span><span class="tag">InfluxDB</span><span class="tag">Grafana</span></div>
+      </div>
+      <div class="mini glass">
+        <div class="head"><h3>Tagungs-Plugin</h3><span class="lock"><svg class="i"><use href="#i-lock"/></svg>privat</span></div>
+        <p>WordPress-Plugin für Tagungsanmeldungen: mehrere Veranstaltungen, Formularfelder und E-Mail-Vorlagen pro Veranstaltung.</p>
+        <div class="tags"><span class="tag">PHP</span><span class="tag">WordPress</span></div>
+      </div>
+      <div class="mini glass">
+        <div class="head"><h3>gamutask</h3><span class="lock"><svg class="i"><use href="#i-lock"/></svg>privat</span></div>
+        <p>Aufgabenplaner, der Tasks nach Priorität, Dauer und Deadline automatisch in die Arbeitswoche verteilt.</p>
+        <div class="tags"><span class="tag">Node.js</span><span class="tag">FullCalendar</span></div>
+      </div>
+      <div class="mini glass">
+        <div class="head"><h3>CredManager</h3><span class="lock"><svg class="i"><use href="#i-lock"/></svg>privat</span></div>
+        <p>Kleine Web-App, die Anlagen, Systeme und die zugehörigen Zugangsdaten an einem Ort verwaltet.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Jinja2</span></div>
+      </div>
+    </div>
+
+    <footer>
+      gamunex · <a href="https://github.com/gamunex">github.com/gamunex</a>
+    </footer>
+  </div>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-github" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+      <symbol id="i-volume" viewBox="0 0 24 24"><path d="M11 4.7a.7.7 0 0 0-1.2-.5L6.4 7.6A1.4 1.4 0 0 1 5.4 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.4a1.4 1.4 0 0 1 1 .4l3.4 3.4a.7.7 0 0 0 1.2-.5z"/><path d="M16 9a5 5 0 0 1 0 6M19.4 18.4a9 9 0 0 0 0-12.8"/></symbol>
+      <symbol id="i-mic-off" viewBox="0 0 24 24"><path d="M2 2l20 20M18.89 13.23A7.12 7.12 0 0 0 19 12v-2M5 10v2a7 7 0 0 0 12 5M15 9.34V5a3 3 0 0 0-5.68-1.33M9 9v3a3 3 0 0 0 5.12 2.12M12 19v3"/></symbol>
+      <symbol id="i-prev" viewBox="0 0 24 24"><path d="M19 20 9 12l10-8zM5 19V5"/></symbol>
+      <symbol id="i-next" viewBox="0 0 24 24"><path d="m5 4 10 8-10 8zM19 5v14"/></symbol>
+      <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></symbol>
+    </defs>
+  </svg>
+</body>
+</html>
